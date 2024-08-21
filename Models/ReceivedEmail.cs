@@ -8,5 +8,6 @@
         public string Subject { get; set; }
         public string Body { get; set; }
         public DateTime Timestamp { get; set; }
+        public string Image { get; set; }
     }
 }
