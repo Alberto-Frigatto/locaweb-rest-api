@@ -50,6 +50,7 @@ namespace locaweb_rest_api.Data.Contexts
                 entity.Property(p => p.Subject).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.Body).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.Timestamp).IsRequired().HasColumnType("date");
+                entity.Property(p => p.Image).IsRequired().HasMaxLength(100);
             });
 
             modelBuilder.Entity<TrashedEmail>(entity =>
