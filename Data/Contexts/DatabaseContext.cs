@@ -8,8 +8,9 @@ namespace locaweb_rest_api.Data.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<SentEmail> SentEmails { get; set; }
         public DbSet<ReceivedEmail> ReceivedEmails { get; set; }
-        public DbSet<FavoriteSentEmail> FavoriteSentEmails { get; set; }
+        public DbSet<FavoriteReceivedEmail> FavoriteReceivedEmails { get; set; }
         public DbSet<TrashedEmail> TrashedEmails { get; set; }
+        public DbSet<DeletedReceivedEmail> DeletedEmails { get; set; }
 
         public DatabaseContext(DbContextOptions options) : base(options)
         {
@@ -38,6 +39,7 @@ namespace locaweb_rest_api.Data.Contexts
                 entity.Property(p => p.SendDate).IsRequired().HasColumnType("date");
                 entity.Property(p => p.Viewed).IsRequired().HasColumnType("number(1)");
                 entity.Property(p => p.Scheduled).IsRequired().HasColumnType("number(1)");
+                entity.Property(p => p.Canceled).IsRequired().HasColumnType("number(1)");
                 entity.HasOne(e => e.User).WithMany().HasForeignKey(e => e.IdUser).IsRequired();
             });
 
@@ -62,9 +64,17 @@ namespace locaweb_rest_api.Data.Contexts
                 entity.HasOne(e => e.User).WithMany().HasForeignKey(e => e.IdUser).IsRequired();
             });
 
-            modelBuilder.Entity<FavoriteSentEmail>(entity =>
+            modelBuilder.Entity<FavoriteReceivedEmail>(entity =>
             {
-                entity.ToTable("FavoriteSentEmail");
+                entity.ToTable("FavoriteReceivedEmail");
+                entity.HasKey(p => p.Id);
+                entity.HasOne(e => e.User).WithMany().HasForeignKey(e => e.IdUser).IsRequired();
+                entity.HasOne(e => e.ReceivedEmail).WithMany().HasForeignKey(e => e.IdReceivedEmail).IsRequired();
+            });
+
+            modelBuilder.Entity<DeletedReceivedEmail>(entity =>
+            {
+                entity.ToTable("DeletedReceivedEmail");
                 entity.HasKey(p => p.Id);
                 entity.HasOne(e => e.User).WithMany().HasForeignKey(e => e.IdUser).IsRequired();
                 entity.HasOne(e => e.ReceivedEmail).WithMany().HasForeignKey(e => e.IdReceivedEmail).IsRequired();
