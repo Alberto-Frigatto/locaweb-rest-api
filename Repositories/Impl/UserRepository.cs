@@ -18,8 +18,15 @@ namespace locaweb_rest_api.Repositories.Impl
             _context.SaveChanges();
         }
 
-        public User? GetByEmail(string email) => _context.Users.FirstOrDefault(e => e.Email == email);
-        public User? GetByEmailAndPassword(string email, string password) => _context.Users.FirstOrDefault(e => e.Email == email && e.Password == password);
+        public User? GetByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(e => e.Email == email);
+        }
+        public User? GetByEmailAndPassword(string email, string password)
+        {
+            return _context.Users
+                .FirstOrDefault(e => e.Email == email && e.Password == password);
+        }
         public void Update(User model)
         {
             _context.Users.Update(model);
