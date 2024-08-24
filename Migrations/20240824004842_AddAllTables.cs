@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace locaweb_rest_api.Migrations
 {
     /// <inheritdoc />
-    public partial class AddAllModels : Migration
+    public partial class AddAllTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,8 @@ namespace locaweb_rest_api.Migrations
                     Recipient = table.Column<string>(type: "NVARCHAR2(150)", maxLength: 150, nullable: false),
                     Subject = table.Column<string>(type: "NVARCHAR2(255)", maxLength: 255, nullable: false),
                     Body = table.Column<string>(type: "NVARCHAR2(255)", maxLength: 255, nullable: false),
-                    Timestamp = table.Column<DateTime>(type: "date", nullable: false)
+                    Timestamp = table.Column<DateTime>(type: "date", nullable: false),
+                    Image = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,7 +48,7 @@ namespace locaweb_rest_api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FavoriteSentEmail",
+                name: "DeletedReceivedEmail",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -57,15 +58,41 @@ namespace locaweb_rest_api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FavoriteSentEmail", x => x.Id);
+                    table.PrimaryKey("PK_DeletedReceivedEmail", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FavoriteSentEmail_ReceivedEmail_IdReceivedEmail",
+                        name: "FK_DeletedReceivedEmail_ReceivedEmail_IdReceivedEmail",
                         column: x => x.IdReceivedEmail,
                         principalTable: "ReceivedEmail",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FavoriteSentEmail_User_IdUser",
+                        name: "FK_DeletedReceivedEmail_User_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FavoriteReceivedEmail",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    IdUser = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    IdReceivedEmail = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavoriteReceivedEmail", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FavoriteReceivedEmail_ReceivedEmail_IdReceivedEmail",
+                        column: x => x.IdReceivedEmail,
+                        principalTable: "ReceivedEmail",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FavoriteReceivedEmail_User_IdUser",
                         column: x => x.IdUser,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -132,13 +159,23 @@ namespace locaweb_rest_api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_FavoriteSentEmail_IdReceivedEmail",
-                table: "FavoriteSentEmail",
+                name: "IX_DeletedReceivedEmail_IdReceivedEmail",
+                table: "DeletedReceivedEmail",
                 column: "IdReceivedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FavoriteSentEmail_IdUser",
-                table: "FavoriteSentEmail",
+                name: "IX_DeletedReceivedEmail_IdUser",
+                table: "DeletedReceivedEmail",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavoriteReceivedEmail_IdReceivedEmail",
+                table: "FavoriteReceivedEmail",
+                column: "IdReceivedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavoriteReceivedEmail_IdUser",
+                table: "FavoriteReceivedEmail",
                 column: "IdUser");
 
             migrationBuilder.CreateIndex(
@@ -166,7 +203,10 @@ namespace locaweb_rest_api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FavoriteSentEmail");
+                name: "DeletedReceivedEmail");
+
+            migrationBuilder.DropTable(
+                name: "FavoriteReceivedEmail");
 
             migrationBuilder.DropTable(
                 name: "TrashedEmail");

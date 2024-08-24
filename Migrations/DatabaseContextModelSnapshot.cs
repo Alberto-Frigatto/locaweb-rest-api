@@ -22,7 +22,7 @@ namespace locaweb_rest_api.Migrations
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("locaweb_rest_api.Models.FavoriteSentEmail", b =>
+            modelBuilder.Entity("locaweb_rest_api.Models.DeletedReceivedEmail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,8 +30,7 @@ namespace locaweb_rest_api.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("IdReceivedEmail")
-                        .IsRequired()
+                    b.Property<int>("IdReceivedEmail")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("IdUser")
@@ -43,7 +42,30 @@ namespace locaweb_rest_api.Migrations
 
                     b.HasIndex("IdUser");
 
-                    b.ToTable("FavoriteSentEmail", (string)null);
+                    b.ToTable("DeletedReceivedEmail", (string)null);
+                });
+
+            modelBuilder.Entity("locaweb_rest_api.Models.FavoriteReceivedEmail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdReceivedEmail")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<int>("IdUser")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdReceivedEmail");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("FavoriteReceivedEmail", (string)null);
                 });
 
             modelBuilder.Entity("locaweb_rest_api.Models.ReceivedEmail", b =>
@@ -99,6 +121,9 @@ namespace locaweb_rest_api.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("NVARCHAR2(255)");
+
+                    b.Property<bool>("Canceled")
+                        .HasColumnType("number(1)");
 
                     b.Property<int>("IdUser")
                         .HasColumnType("NUMBER(10)");
@@ -203,7 +228,26 @@ namespace locaweb_rest_api.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("locaweb_rest_api.Models.FavoriteSentEmail", b =>
+            modelBuilder.Entity("locaweb_rest_api.Models.DeletedReceivedEmail", b =>
+                {
+                    b.HasOne("locaweb_rest_api.Models.ReceivedEmail", "ReceivedEmail")
+                        .WithMany()
+                        .HasForeignKey("IdReceivedEmail")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("locaweb_rest_api.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReceivedEmail");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("locaweb_rest_api.Models.FavoriteReceivedEmail", b =>
                 {
                     b.HasOne("locaweb_rest_api.Models.ReceivedEmail", "ReceivedEmail")
                         .WithMany()

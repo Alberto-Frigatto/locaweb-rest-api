@@ -5,26 +5,24 @@
 namespace locaweb_rest_api.Migrations
 {
     /// <inheritdoc />
-    public partial class AddImageColumnToReceivedEmailTable : Migration
+    public partial class AddCanceledAttrToSentEmail : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Image",
-                table: "ReceivedEmail",
-                type: "NVARCHAR2(100)",
-                maxLength: 100,
-                nullable: false,
-                defaultValue: "");
+            migrationBuilder.AddColumn<bool>(
+                name: "Canceled",
+                table: "SentEmail",
+                type: "number(1)",
+                nullable: false);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Image",
-                table: "ReceivedEmail");
+                name: "Canceled",
+                table: "SentEmail");
         }
     }
 }
