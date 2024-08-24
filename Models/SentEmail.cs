@@ -10,6 +10,7 @@
         public DateTime SendDate { get; set; }
         public bool Viewed { get; set; }
         public bool Scheduled { get; set; }
+        public bool Canceled { get; set; }
         public int IdUser { get; set; }
         public User User { get; set; }
     }
