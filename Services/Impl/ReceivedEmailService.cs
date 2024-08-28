@@ -14,7 +14,7 @@ namespace locaweb_rest_api.Services.Impl
 
         public IEnumerable<ReceivedEmail> GetAllReceivedEmails(int page)
         {
-            return _repository.GetAll(page)
+            return _repository.GetAll(page);
         }
     }
 }
