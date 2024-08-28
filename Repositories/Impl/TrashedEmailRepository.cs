@@ -25,6 +25,18 @@ namespace locaweb_rest_api.Repositories.Impl
             _context.SaveChanges();
         }
 
+        public TrashedEmail? GetByIdReceivedEmail(int idReceivedEmail)
+        {
+            return _context.TrashedEmails.
+                FirstOrDefault(e => e.IdReceivedEmail == idReceivedEmail);
+        }
+
+        public TrashedEmail? GetByIdSentEmail(int idSentEmail)
+        {
+            return _context.TrashedEmails.
+                FirstOrDefault(e => e.IdSentEmail == idSentEmail);
+        }
+
         public IEnumerable<TrashedEmail> GetAll(int page)
         {
             return _context.TrashedEmails
