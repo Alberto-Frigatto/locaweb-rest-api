@@ -48,7 +48,6 @@ namespace locaweb_rest_api.Data.Contexts
                 entity.ToTable("ReceivedEmail");
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Sender).IsRequired().HasMaxLength(150);
-                entity.Property(p => p.Recipient).IsRequired().HasMaxLength(150);
                 entity.Property(p => p.Subject).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.Body).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.Timestamp).IsRequired().HasColumnType("date");
