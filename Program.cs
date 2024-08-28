@@ -17,7 +17,7 @@ builder.Services.AddScoped<IFavoriteReceivedEmailRepository, FavoriteReceivedEma
 builder.Services.AddScoped<IReceivedEmailRepository, ReceivedEmailRepository>();
 builder.Services.AddScoped<ISentEmailRepository, SentEmailRepository>();
 builder.Services.AddScoped<ITrashedEmailRepository, TrashedEmailRepository>();
-builder.Services.AddScoped<IUserRepository, IUserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IDeletedReceivedEmailService, DeletedReceivedEmailService>();
 builder.Services.AddScoped<IFavoriteReceivedEmailService, FavoriteReceivedEmailService>();
