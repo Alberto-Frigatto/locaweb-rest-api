@@ -19,6 +19,12 @@ namespace locaweb_rest_api.Repositories.Impl
             _context.SaveChanges();
         }
 
+        public FavoriteReceivedEmail? GetByIdReceivedEmail(int idReceivedEmail)
+        {
+            return _context.FavoriteReceivedEmails.
+                FirstOrDefault(e => e.IdReceivedEmail == idReceivedEmail);
+        }
+
         public void Delete(FavoriteReceivedEmail model)
         {
             _context.FavoriteReceivedEmails.Remove(model);
