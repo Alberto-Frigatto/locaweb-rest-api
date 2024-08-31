@@ -12,10 +12,10 @@ namespace locaweb_rest_api.Models
         public DateTime Timestamp { get; set; }
         public string Image { get; set; }
         [NotMapped]
-        public bool isFavorite { get; set; }
+        public bool IsFavorite { get; set; }
         [NotMapped]
-        public bool isTrash { get; set; }
+        public bool IsTrash { get; set; }
         [NotMapped]
-        public bool isDeleted { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
