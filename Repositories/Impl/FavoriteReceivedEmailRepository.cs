@@ -19,10 +19,10 @@ namespace locaweb_rest_api.Repositories.Impl
             _context.SaveChanges();
         }
 
-        public FavoriteReceivedEmail? GetByIdReceivedEmail(int idReceivedEmail)
+        public FavoriteReceivedEmail? GetByIdUserAndIdReceivedEmail(int idUser, int idReceivedEmail)
         {
             return _context.FavoriteReceivedEmails.
-                FirstOrDefault(e => e.IdReceivedEmail == idReceivedEmail);
+                FirstOrDefault(e => e.IdUser == idUser && e.IdReceivedEmail == idReceivedEmail);
         }
 
         public void Delete(FavoriteReceivedEmail model)
@@ -31,11 +31,12 @@ namespace locaweb_rest_api.Repositories.Impl
             _context.SaveChanges();
         }
 
-        public IEnumerable<FavoriteReceivedEmail> GetAll(int page)
+        public IEnumerable<FavoriteReceivedEmail> GetAll(int page, int idUser)
         {
             return _context.FavoriteReceivedEmails
                 .Include(e => e.User)
                 .Include(e => e.ReceivedEmail)
+                .Where(e => e.IdUser == idUser)
                 .Skip((page - 1) * page)
                 .Take(20)
                 .AsNoTracking()
