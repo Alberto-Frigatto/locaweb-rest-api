@@ -25,24 +25,25 @@ namespace locaweb_rest_api.Repositories.Impl
             _context.SaveChanges();
         }
 
-        public TrashedEmail? GetByIdReceivedEmail(int idReceivedEmail)
+        public TrashedEmail? GetByIdUserAndIdReceivedEmail(int idUser, int idReceivedEmail)
         {
             return _context.TrashedEmails.
-                FirstOrDefault(e => e.IdReceivedEmail == idReceivedEmail);
+                FirstOrDefault(e => e.IdUser == idUser && e.IdReceivedEmail == idReceivedEmail);
         }
 
-        public TrashedEmail? GetByIdSentEmail(int idSentEmail)
+        public TrashedEmail? GetByIdUserAndIdSentEmail(int idUser, int idSentEmail)
         {
             return _context.TrashedEmails.
-                FirstOrDefault(e => e.IdSentEmail == idSentEmail);
+                FirstOrDefault(e => e.IdUser == idUser && e.IdSentEmail == idSentEmail);
         }
 
-        public IEnumerable<TrashedEmail> GetAll(int page)
+        public IEnumerable<TrashedEmail> GetAll(int page, int idUser)
         {
             return _context.TrashedEmails
                 .Include(e => e.User)
                 .Include(e => e.ReceivedEmail)
                 .Include(e => e.SentEmail)
+                .Where(e => e.IdUser == idUser)
                 .Skip((page - 1) * page)
                 .Take(20)
                 .AsNoTracking()
