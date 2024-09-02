@@ -15,12 +15,12 @@ namespace locaweb_rest_api.Services.Impl
         public void CreateUser(User model, IFormFile image)
         {
             _repository.Add(model);
-            this.SaveUserImage(image);
+            SaveUserImage(image);
         }
 
         async private void SaveUserImage(IFormFile image)
         {
-            string imagePath = this.GetUserImagePath(image);
+            string imagePath = GetImagePath();
 
             using (var stream = new FileStream(imagePath, FileMode.Create))
             {
@@ -28,9 +28,14 @@ namespace locaweb_rest_api.Services.Impl
             }
         }
 
-        private string GetUserImagePath(IFormFile image)
+        private string GetImagePath()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "uploads", image.FileName);
+            return Path.Combine(Directory.GetCurrentDirectory(), "uploads", GenerateRandomFileName());
+        }
+
+        private static string GenerateRandomFileName()
+        {
+            return $"{Guid.NewGuid()}.jpg";
         }
 
         public User? GetUserByEmail(string email)
