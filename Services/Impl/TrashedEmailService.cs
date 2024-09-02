@@ -17,25 +17,25 @@ namespace locaweb_rest_api.Services.Impl
             _repository.Add(model);
         }
 
-        public void DeleteTrashedEmailByIdReceivedEmail(int idReceivedEmail)
+        public void DeleteTrashedEmailByIdReceivedEmail(int idUser, int idReceivedEmail)
         {
-            TrashedEmail? trashedEmail = _repository.GetByIdReceivedEmail(idReceivedEmail);
+            TrashedEmail? trashedEmail = _repository.GetByIdUserAndIdReceivedEmail(idUser, idReceivedEmail);
 
             if (trashedEmail != null)
                 _repository.Delete(trashedEmail);
         }
 
-        public void DeleteTrashedEmailByIdSentEmail(int idSentEmail)
+        public void DeleteTrashedEmailByIdSentEmail(int idUser, int idSentEmail)
         {
-            TrashedEmail? trashedEmail = _repository.GetByIdSentEmail(idSentEmail);
+            TrashedEmail? trashedEmail = _repository.GetByIdUserAndIdSentEmail(idUser, idSentEmail);
 
             if (trashedEmail != null)
                 _repository.Delete(trashedEmail);
         }
 
-        public IEnumerable<TrashedEmail> GetAllTrashedEmails(int page)
+        public IEnumerable<TrashedEmail> GetAllTrashedEmails(int page, int idUser)
         {
-            return _repository.GetAll(page);
+            return _repository.GetAll(page, idUser);
         }
     }
 }
