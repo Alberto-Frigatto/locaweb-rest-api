@@ -4,9 +4,9 @@ namespace locaweb_rest_api.Services
 {
     public interface ITrashedEmailService
     {
-        IEnumerable<TrashedEmail> GetAllTrashedEmails(int page);
+        IEnumerable<TrashedEmail> GetAllTrashedEmails(int page, int idUser);
         void CreateTrashedEmail(TrashedEmail model);
-        void DeleteTrashedEmailByIdReceivedEmail(int idReceivedEmail);
-        void DeleteTrashedEmailByIdSentEmail(int idSentEmail);
+        void DeleteTrashedEmailByIdReceivedEmail(int idUser, int idReceivedEmail);
+        void DeleteTrashedEmailByIdSentEmail(int idUser, int idSentEmail);
     }
 }
