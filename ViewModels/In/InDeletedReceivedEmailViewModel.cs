@@ -1,5 +1,4 @@
-﻿using locaweb_rest_api.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace locaweb_rest_api.ViewModels.In
 {
