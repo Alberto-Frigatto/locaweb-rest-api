@@ -17,17 +17,17 @@ namespace locaweb_rest_api.Services.Impl
             _repository.Add(model);
         }
 
-        public void DeleteFavoriteReceivedEmail(int idReceivedEmail)
+        public void DeleteFavoriteReceivedEmail(int idReceivedEmail, int idUser)
         {
-            FavoriteReceivedEmail? favoriteReceivedEmail = _repository.GetByIdReceivedEmail(idReceivedEmail);
+            FavoriteReceivedEmail? favoriteReceivedEmail = _repository.GetByIdUserAndIdReceivedEmail(idUser, idReceivedEmail);
 
             if (favoriteReceivedEmail != null)
                 _repository.Delete(favoriteReceivedEmail);
         }
 
-        public IEnumerable<FavoriteReceivedEmail> GetAllFavoriteReceivedEmails(int page)
+        public IEnumerable<FavoriteReceivedEmail> GetAllFavoriteReceivedEmails(int page, int idUser)
         {
-            return _repository.GetAll(page);
+            return _repository.GetAll(page, idUser);
         }
     }
 }
