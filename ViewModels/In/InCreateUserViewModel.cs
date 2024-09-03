@@ -2,7 +2,7 @@
 
 namespace locaweb_rest_api.ViewModels.In
 {
-    public class InUserViewModel
+    public class InCreateUserViewModel
     {
         [Required(ErrorMessage = "O e-mail é obrigatório")]
         [MinLength(1, ErrorMessage = "O e-mail não pode ser vazio")]
@@ -26,5 +26,8 @@ namespace locaweb_rest_api.ViewModels.In
 
         [Required(ErrorMessage = "O tema é obrigatório")]
         public bool Theme { get; set; }
+
+        [Required(ErrorMessage = "A imagem do usuário é obrigatória")]
+        public IFormFile Image { get; set; }
     }
 }
