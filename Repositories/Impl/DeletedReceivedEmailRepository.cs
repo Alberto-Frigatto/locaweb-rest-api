@@ -17,5 +17,10 @@ namespace locaweb_rest_api.Repositories.Impl
             _context.DeletedEmails.Add(model);
             _context.SaveChanges();
         }
+
+        public DeletedReceivedEmail? GetByIdUserAndIdReceivedEmail(int idUser, int id)
+        {
+            return _context.DeletedEmails.FirstOrDefault(e => e.IdUser == idUser && e.Id == id);
+        }
     }
 }
