@@ -4,6 +4,7 @@ using locaweb_rest_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using locaweb_rest_api.ViewModels.Out;
 
 namespace locaweb_rest_api.Controllers
 {
@@ -24,7 +25,7 @@ namespace locaweb_rest_api.Controllers
         [HttpGet("")]
         public ActionResult GetAllReceivedEmails([FromQuery] int page = 1)
         {
-            var userId = User.FindFirst(ClaimTypes.Name)?.Value;
+            string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
 
             if (userId == null)
                 return Unauthorized("Usuário não autenticado");
@@ -36,10 +37,19 @@ namespace locaweb_rest_api.Controllers
                 receivedEmail.Image = Url.Action("GetReceivedEmailImage", new { filename = receivedEmail.Image });
             });
 
-            return Ok(receivedEmails);
+            IEnumerable<OutReceivedEmailViewModel> viewModelList = _mapper
+                .Map<IEnumerable<OutReceivedEmailViewModel>>(receivedEmails);
+
+            PaginationReceivedEmail paginacaoViewModel = new()
+            {
+                ReceivedEmails = viewModelList,
+                CurrentPage = page
+            };
+
+            return Ok(paginacaoViewModel);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("Image/{filename}")]
         public ActionResult GetReceivedEmailImage(string filename)
         {
