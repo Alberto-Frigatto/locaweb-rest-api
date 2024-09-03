@@ -9,6 +9,5 @@
         public string Image {  get; set; }
         public string Language { get; set; }
         public bool Theme { get; set; }
-
     }
 }
