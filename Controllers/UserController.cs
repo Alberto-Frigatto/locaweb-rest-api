@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using locaweb_rest_api.Models;
 using locaweb_rest_api.Services;
 using locaweb_rest_api.ViewModels.In;
@@ -40,7 +40,7 @@ namespace locaweb_rest_api.Controllers
             return CreatedAtAction(nameof(Create), new { id = newUser.Id }, outViewModel);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("Image/{filename}")]
         public ActionResult GetUserImage(string filename)
         {
