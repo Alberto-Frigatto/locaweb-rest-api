@@ -58,8 +58,8 @@ namespace locaweb_rest_api.Data.Contexts
             {
                 entity.ToTable("TrashedEmail");
                 entity.HasKey(p => p.Id);
-                entity.HasOne(e => e.ReceivedEmail).WithMany().HasForeignKey(e => e.IdReceivedEmail).IsRequired();
-                entity.HasOne(e => e.SentEmail).WithMany().HasForeignKey(e => e.IdSentEmail).IsRequired();
+                entity.HasOne(e => e.ReceivedEmail).WithMany().HasForeignKey(e => e.IdReceivedEmail);
+                entity.HasOne(e => e.SentEmail).WithMany().HasForeignKey(e => e.IdSentEmail);
                 entity.HasOne(e => e.User).WithMany().HasForeignKey(e => e.IdUser).IsRequired();
             });
 
