@@ -43,5 +43,15 @@ namespace locaweb_rest_api.Services.Impl
         {
             return _repository.GetByEmail(email);
         }
+        
+        public User? GetUserById(int id)
+        {
+            return _repository.GetById(id);
+        }
+
+        public void UpdateUserPreferences(User model)
+        {
+            _repository.Update(model);
+        }
     }
 }
