@@ -5,5 +5,6 @@ namespace locaweb_rest_api.Repositories
     public interface IDeletedReceivedEmailRepository
     {
         void Add(DeletedReceivedEmail model);
+        DeletedReceivedEmail? GetByIdUserAndIdReceivedEmail(int idUser, int id);
     }
 }
