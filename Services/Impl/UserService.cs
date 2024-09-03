@@ -12,16 +12,17 @@ namespace locaweb_rest_api.Services.Impl
             _repository = repository;
         }
 
-        public void CreateUser(User model, IFormFile image)
+        async public void CreateUser(User model, IFormFile image)
         {
+            string newImagePath = GetImagePath();
+            model.Image = newImagePath.Split("/").Last();
+
             _repository.Add(model);
-            SaveUserImage(image);
+             await SaveUserImage(image, newImagePath);
         }
 
-        async private void SaveUserImage(IFormFile image)
+        async private Task SaveUserImage(IFormFile image, string imagePath)
         {
-            string imagePath = GetImagePath();
-
             using (var stream = new FileStream(imagePath, FileMode.Create))
             {
                 await image.CopyToAsync(stream);
@@ -35,7 +36,7 @@ namespace locaweb_rest_api.Services.Impl
 
         private static string GenerateRandomFileName()
         {
-            return $"{Guid.NewGuid()}.jpg";
+            return $"{Guid.NewGuid()}.jpg".Replace("-", "");
         }
 
         public User? GetUserByEmail(string email)
