@@ -1,10 +1,11 @@
-using AutoMapper;
+﻿using AutoMapper;
 using locaweb_rest_api.Models;
 using locaweb_rest_api.Services;
 using locaweb_rest_api.ViewModels.In;
 using locaweb_rest_api.ViewModels.Out;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace locaweb_rest_api.Controllers
 {
@@ -52,6 +53,34 @@ namespace locaweb_rest_api.Controllers
             var image = System.IO.File.ReadAllBytes(imagePath);
 
             return File(image, "image/jpeg");
+        }
+
+        [Authorize]
+        [HttpPut]
+        public ActionResult UpdateUserPreferences([FromBody] InUpdateUserPreferencesViewModel viewModel)
+        {
+            string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
+
+            if (userId == null)
+                return Unauthorized("Usuário não autenticado");
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            User user = _service.GetUserById(int.Parse(userId));
+
+            if (user == null)
+                return Unauthorized("Usuário não autenticado");
+
+            user.Theme = viewModel.Theme;
+            user.Language = viewModel.Language;
+
+            _service.UpdateUserPreferences(user);
+
+            OutUserViewModel outViewModel = _mapper.Map<OutUserViewModel>(user);
+            outViewModel.Image = Url.Action("GetUserImage", new { filename = user.Image });
+
+            return Ok(outViewModel);
         }
     }
 }
