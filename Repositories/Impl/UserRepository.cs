@@ -22,11 +22,18 @@ namespace locaweb_rest_api.Repositories.Impl
         {
             return _context.Users.FirstOrDefault(e => e.Email == email);
         }
+
+        public User? GetById(int id)
+        {
+            return _context.Users.FirstOrDefault(e => e.Id == id);
+        }
+
         public User? GetByEmailAndPassword(string email, string password)
         {
             return _context.Users
                 .FirstOrDefault(e => e.Email == email && e.Password == password);
         }
+
         public void Update(User model)
         {
             _context.Users.Update(model);
