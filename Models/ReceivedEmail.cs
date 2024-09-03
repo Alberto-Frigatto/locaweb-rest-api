@@ -13,9 +13,5 @@ namespace locaweb_rest_api.Models
         public string Image { get; set; }
         [NotMapped]
         public bool IsFavorite { get; set; }
-        [NotMapped]
-        public bool IsTrash { get; set; }
-        [NotMapped]
-        public bool IsDeleted { get; set; }
     }
 }
