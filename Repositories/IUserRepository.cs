@@ -6,6 +6,7 @@ namespace locaweb_rest_api.Repositories
     {
         User? GetByEmailAndPassword(string email, string password);
         User? GetByEmail(string email);
+        User? GetById(int id);
         void Add(User model);
         void Update(User model);
     }
