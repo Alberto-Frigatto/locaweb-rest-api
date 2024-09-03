@@ -13,6 +13,5 @@ namespace locaweb_rest_api.ViewModels.Out
         public bool Viewed { get; set; }
         public bool Scheduled { get; set; }
         public bool Canceled { get; set; }
-        public User User { get; set; }
     }
 }
