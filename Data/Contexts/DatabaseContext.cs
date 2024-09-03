@@ -10,7 +10,7 @@ namespace locaweb_rest_api.Data.Contexts
         public DbSet<ReceivedEmail> ReceivedEmails { get; set; }
         public DbSet<FavoriteReceivedEmail> FavoriteReceivedEmails { get; set; }
         public DbSet<TrashedEmail> TrashedEmails { get; set; }
-        public DbSet<DeletedReceivedEmail> DeletedEmails { get; set; }
+        public DbSet<DeletedReceivedEmail> DeletedReceivedEmails { get; set; }
 
         public DatabaseContext(DbContextOptions options) : base(options)
         {
