@@ -24,17 +24,13 @@ namespace locaweb_rest_api.Services.Impl
 
         public IEnumerable<ReceivedEmail> GetAllReceivedEmails(int page, int idUser)
         {
-            List<ReceivedEmail> allReceivedEmails = _receivedEmailRepository.GetAll(page).ToList();
-            allReceivedEmails.ForEach(receivedEmail => {
-                receivedEmail.IsDeleted = _deletedReceivedEmailRepository
-                    .GetByIdUserAndIdReceivedEmail(idUser, receivedEmail.Id) != null;
-                receivedEmail.IsTrash = _trashedEmailRepository
-                    .GetByIdUserAndIdReceivedEmail(idUser, receivedEmail.Id) != null;
+            List<ReceivedEmail> receivedEmails = _receivedEmailRepository.GetAll(page).ToList();
+            receivedEmails.ForEach(receivedEmail => {
                 receivedEmail.IsFavorite = _favoriteReceivedEmailRepository
                     .GetByIdUserAndIdReceivedEmail(idUser, receivedEmail.Id) != null;
             });
 
-            return allReceivedEmails;
+            return receivedEmails;
         }
     }
 }
