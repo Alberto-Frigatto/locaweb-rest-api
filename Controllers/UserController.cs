@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using locaweb_rest_api.Models;
 using locaweb_rest_api.Services;
 using locaweb_rest_api.ViewModels.In;
@@ -76,6 +76,26 @@ namespace locaweb_rest_api.Controllers
             user.Language = viewModel.Language;
 
             _service.UpdateUserPreferences(user);
+
+            OutUserViewModel outViewModel = _mapper.Map<OutUserViewModel>(user);
+            outViewModel.Image = Url.Action("GetUserImage", new { filename = user.Image });
+
+            return Ok(outViewModel);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult GetUserInfo()
+        {
+            string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
+
+            if (userId == null)
+                return Unauthorized("Usuário não autenticado");
+
+            User user = _service.GetUserById(int.Parse(userId));
+
+            if (user == null)
+                return Unauthorized("Usuário não autenticado");
 
             OutUserViewModel outViewModel = _mapper.Map<OutUserViewModel>(user);
             outViewModel.Image = Url.Action("GetUserImage", new { filename = user.Image });
