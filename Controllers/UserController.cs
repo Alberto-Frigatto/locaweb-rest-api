@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using locaweb_rest_api.Models;
 using locaweb_rest_api.Services;
 using locaweb_rest_api.ViewModels.In;
@@ -56,7 +56,7 @@ namespace locaweb_rest_api.Controllers
         }
 
         [Authorize]
-        [HttpPut]
+        [HttpPut("Preferences")]
         public ActionResult UpdateUserPreferences([FromBody] InUpdateUserPreferencesViewModel viewModel)
         {
             string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
