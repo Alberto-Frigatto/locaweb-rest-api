@@ -4,7 +4,7 @@ namespace locaweb_rest_api.Services
 {
     public interface ISentEmailService
     {
-        IEnumerable<SentEmail> GetAllSentEmails(int page);
+        IEnumerable<SentEmail> GetAllSentEmails(int page, int idUser);
         SentEmail? GetSentEmailById(int id);
         void CreateSentEmail(SentEmail model);
         void UpdateSentEmail(SentEmail model);
