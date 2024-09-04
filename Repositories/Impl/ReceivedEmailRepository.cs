@@ -13,11 +13,11 @@ namespace locaweb_rest_api.Repositories.Impl
             _context = context;
         }
 
-        public IEnumerable<ReceivedEmail> GetAll(int page)
+        public IEnumerable<ReceivedEmail> GetAll(int page, int idUser)
         {
             return _context.ReceivedEmails
-                .Where(e => !_context.TrashedEmails.Any(te => te.IdReceivedEmail == e.Id) &&
-                            !_context.DeletedReceivedEmails.Any(de => de.IdReceivedEmail == e.Id))
+                .Where(e => !_context.TrashedEmails.Any(te => te.IdReceivedEmail == e.Id && te.IdUser == idUser) &&
+                            !_context.DeletedReceivedEmails.Any(de => de.IdReceivedEmail == e.Id && de.IdUser == idUser))
                 .OrderBy(e => e.Id)
                 .Skip((page - 1) * 20)
                 .Take(20)
