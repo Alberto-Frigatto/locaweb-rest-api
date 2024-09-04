@@ -35,7 +35,7 @@ namespace locaweb_rest_api.Services.Impl
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
                     new Claim(ClaimTypes.Hash, Guid.NewGuid().ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(20),
+                Expires = DateTime.UtcNow.AddMinutes(120),
                 Issuer = "fiap",
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(secret),
