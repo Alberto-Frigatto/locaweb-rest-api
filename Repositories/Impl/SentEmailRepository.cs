@@ -13,36 +13,37 @@ namespace locaweb_rest_api.Repositories.Impl
             _context = context;
         }
 
-        void ISentEmailRepository.Add(SentEmail model)
+        public void Add(SentEmail model)
         {
             _context.SentEmails.Add(model);
             _context.SaveChanges();
         }
 
-        void ISentEmailRepository.Delete(SentEmail model)
+        public void Delete(SentEmail model)
         {
             _context.SentEmails.Remove(model);
             _context.SaveChanges();
         }
 
-        IEnumerable<SentEmail> ISentEmailRepository.GetAll(int page)
+        public IEnumerable<SentEmail> GetAll(int page, int idUser)
         {
             return _context.SentEmails
-                .Include(e => e.User)
-                .Skip((page - 1) * page)
+                .Where(e => e.IdUser == idUser &&
+                        !_context.TrashedEmails.Any(te => te.IdSentEmail == e.Id && te.IdUser == idUser))
+                .Skip((page - 1) * 20)
                 .Take(20)
                 .AsNoTracking()
                 .ToList();
         }
 
-        SentEmail? ISentEmailRepository.GetById(int id)
+        public SentEmail? GetById(int id)
         {
             return _context.SentEmails
                 .Include(e => e.User)
                 .FirstOrDefault(e => e.Id == id);
         }
 
-        void ISentEmailRepository.Update(SentEmail model)
+        public void Update(SentEmail model)
         {
             _context.SentEmails.Update(model);
             _context.SaveChanges();
