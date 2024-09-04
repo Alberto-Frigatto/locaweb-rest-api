@@ -40,13 +40,13 @@ namespace locaweb_rest_api.Controllers
             IEnumerable<OutReceivedEmailViewModel> viewModelList = _mapper
                 .Map<IEnumerable<OutReceivedEmailViewModel>>(receivedEmails);
 
-            PaginationReceivedEmail paginacaoViewModel = new()
+            PaginationReceivedEmailViewModel paginationViewModel = new()
             {
                 ReceivedEmails = viewModelList,
                 CurrentPage = page
             };
 
-            return Ok(paginacaoViewModel);
+            return Ok(paginationViewModel);
         }
 
         [AllowAnonymous]
