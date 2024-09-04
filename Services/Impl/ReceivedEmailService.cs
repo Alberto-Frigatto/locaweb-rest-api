@@ -24,7 +24,7 @@ namespace locaweb_rest_api.Services.Impl
 
         public IEnumerable<ReceivedEmail> GetAllReceivedEmails(int page, int idUser)
         {
-            List<ReceivedEmail> receivedEmails = _receivedEmailRepository.GetAll(page).ToList();
+            List<ReceivedEmail> receivedEmails = _receivedEmailRepository.GetAll(page, idUser).ToList();
             receivedEmails.ForEach(receivedEmail => {
                 receivedEmail.IsFavorite = _favoriteReceivedEmailRepository
                     .GetByIdUserAndIdReceivedEmail(idUser, receivedEmail.Id) != null;
