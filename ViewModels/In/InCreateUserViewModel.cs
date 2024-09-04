@@ -7,6 +7,7 @@ namespace locaweb_rest_api.ViewModels.In
         [Required(ErrorMessage = "O e-mail é obrigatório")]
         [MinLength(10, ErrorMessage = "O e-mail deve conter pelo menos 10 caracteres")]
         [MaxLength(255, ErrorMessage = "O e-mail não deve exceder 150 caracteres")]
+        [EmailAddress(ErrorMessage = "O e-mail é inválido")]
         public required string Email { get; set; }
 
         [Required(ErrorMessage = "O nome completo é obrigatório")]
