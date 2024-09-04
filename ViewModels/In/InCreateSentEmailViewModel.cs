@@ -2,10 +2,10 @@
 
 namespace locaweb_rest_api.ViewModels.In
 {
-    public class InSentEmailViewModel
+    public class InCreateSentEmailViewModel
     {
         [Required(ErrorMessage = "O destinatário é obrigatório")]
-        [MinLength(1, ErrorMessage = "O destinatário não pode ser vazio")]
+        [MinLength(3, ErrorMessage = "O destinatário deve ter pelo menos 3 caracteres")]
         [MaxLength(150, ErrorMessage = "O destinatário não deve exceder 150 caracteres")]
         public string Recipient { get; set; }
 
