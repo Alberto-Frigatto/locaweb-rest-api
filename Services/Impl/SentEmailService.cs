@@ -25,9 +25,9 @@ namespace locaweb_rest_api.Services.Impl
                 _repository.Delete(sentEmail);
         }
 
-        public IEnumerable<SentEmail> GetAllSentEmails(int page)
+        public IEnumerable<SentEmail> GetAllSentEmails(int page, int idUser)
         {
-            return _repository.GetAll(page);
+            return _repository.GetAll(page, idUser);
         }
 
         public SentEmail? GetSentEmailById(int id)
