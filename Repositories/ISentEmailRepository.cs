@@ -5,6 +5,7 @@ namespace locaweb_rest_api.Repositories
     public interface ISentEmailRepository
     {
         IEnumerable<SentEmail> GetAll(int page, int idUser);
+        IEnumerable<SentEmail> Search(string query, int page, int idUser);
         SentEmail? GetById(int id);
         SentEmail? GetLast(int idUser);
         void Add(SentEmail model);
