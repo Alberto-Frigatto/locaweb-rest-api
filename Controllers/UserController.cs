@@ -30,7 +30,7 @@ namespace locaweb_rest_api.Controllers
 
             User? usuario = _service.GetUserByEmail(viewModel.Email);
             if (usuario != null)
-                return Conflict("O usuário já existe");
+                return Conflict(new OutErrorViewModel() { error = "O usuário já existe" });
 
             User newUser = _mapper.Map<User>(viewModel);
             _service.CreateUser(newUser, viewModel.Image);
@@ -48,7 +48,7 @@ namespace locaweb_rest_api.Controllers
             var imagePath = Path.Combine("uploads", filename);
 
             if (!System.IO.File.Exists(imagePath))
-                return NotFound("Imagem não encontrada");
+                return NotFound(new OutErrorViewModel() { error = "Imagem não encontrada" });
 
             var image = System.IO.File.ReadAllBytes(imagePath);
 
@@ -62,7 +62,7 @@ namespace locaweb_rest_api.Controllers
             string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
 
             if (userId == null)
-                return Unauthorized("Usuário não autenticado");
+                return Unauthorized(new OutErrorViewModel() { error = "Usuário não autenticado" });
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -70,7 +70,7 @@ namespace locaweb_rest_api.Controllers
             User user = _service.GetUserById(int.Parse(userId));
 
             if (user == null)
-                return Unauthorized("Usuário não autenticado");
+                return Unauthorized(new OutErrorViewModel() { error = "Usuário não autenticado" });
 
             user.Theme = viewModel.Theme;
             user.Language = viewModel.Language;
@@ -90,12 +90,12 @@ namespace locaweb_rest_api.Controllers
             string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
 
             if (userId == null)
-                return Unauthorized("Usuário não autenticado");
+                return Unauthorized(new OutErrorViewModel() { error = "Usuário não autenticado" });
 
             User user = _service.GetUserById(int.Parse(userId));
 
             if (user == null)
-                return Unauthorized("Usuário não autenticado");
+                return Unauthorized(new OutErrorViewModel() { error = "Usuário não autenticado" });
 
             OutUserViewModel outViewModel = _mapper.Map<OutUserViewModel>(user);
             outViewModel.Image = Url.Action("GetUserImage", new { filename = user.Image });
