@@ -18,7 +18,7 @@ namespace locaweb_rest_api.Repositories.Impl
             return _context.ReceivedEmails
                 .Where(e => !_context.TrashedEmails.Any(te => te.IdReceivedEmail == e.Id && te.IdUser == idUser) &&
                             !_context.DeletedReceivedEmails.Any(de => de.IdReceivedEmail == e.Id && de.IdUser == idUser))
-                .OrderBy(e => e.Id)
+                .OrderByDescending(e => e.Id)
                 .Skip((page - 1) * 20)
                 .Take(20)
                 .AsNoTracking()
