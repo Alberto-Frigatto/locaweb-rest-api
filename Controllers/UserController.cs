@@ -67,7 +67,7 @@ namespace locaweb_rest_api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            User user = _service.GetUserById(int.Parse(userId));
+            User? user = _service.GetUserById(int.Parse(userId));
 
             if (user == null)
                 return Unauthorized(new OutErrorViewModel() { error = "Usuário não autenticado" });
