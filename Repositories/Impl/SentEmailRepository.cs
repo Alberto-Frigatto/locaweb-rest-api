@@ -40,15 +40,29 @@ namespace locaweb_rest_api.Repositories.Impl
         public SentEmail? GetById(int id)
         {
             return _context.SentEmails
-                .FirstOrDefault(e => e.Id == id);
+                .FirstOrDefault(e => e.Id == id &&
+                        !_context.TrashedEmails.Any(te => te.IdSentEmail == e.Id));
         }
         
         public SentEmail? GetLast(int idUser)
         {
             return _context.SentEmails
-                .Where(e => e.IdUser == idUser)
+                .Where(e => e.IdUser == idUser &&
+                        !_context.TrashedEmails.Any(te => te.IdSentEmail == e.Id && te.IdUser == idUser))
                 .OrderByDescending(e => e.Id)
                 .FirstOrDefault();
+        }
+
+        public IEnumerable<SentEmail> Search(string query, int page, int idUser)
+        {
+            return _context.SentEmails
+                .Where(e => (e.Recipient.ToLower().Contains(query.ToLower()) || e.Subject.ToLower().Contains(query.ToLower()) || e.Body.ToLower().Contains(query.ToLower())) &&
+                            !_context.TrashedEmails.Any(te => te.IdSentEmail == e.Id && te.IdUser == idUser))
+                .OrderByDescending(e => e.Id)
+                .Skip((page - 1) * 20)
+                .Take(20)
+                .AsNoTracking()
+                .ToList();
         }
 
         public void Update(SentEmail model)
