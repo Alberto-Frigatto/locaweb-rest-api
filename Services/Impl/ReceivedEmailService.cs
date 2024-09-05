@@ -45,5 +45,16 @@ namespace locaweb_rest_api.Services.Impl
 
             return receivedEmail;
         }
+
+        public IEnumerable<ReceivedEmail> SearchReceivedEmails(string query, int page, int idUser)
+        {
+            List<ReceivedEmail> receivedEmails = _receivedEmailRepository.Search(query, page, idUser).ToList();
+            receivedEmails.ForEach(receivedEmail => {
+                receivedEmail.IsFavorite = _favoriteReceivedEmailRepository
+                    .GetByIdUserAndIdReceivedEmail(idUser, receivedEmail.Id) != null;
+            });
+
+            return receivedEmails;
+        }
     }
 }
