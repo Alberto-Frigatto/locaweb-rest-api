@@ -28,7 +28,7 @@ namespace locaweb_rest_api.Controllers
             string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
 
             if (userId == null)
-                return Unauthorized("Usuário não autenticado");
+                return Unauthorized(new OutErrorViewModel() { error = "Usuário não autenticado" });
 
             int parsedUserId = int.Parse(userId);
             List<ReceivedEmail> receivedEmails = _service.GetAllReceivedEmails(page, parsedUserId).ToList();
@@ -56,7 +56,7 @@ namespace locaweb_rest_api.Controllers
             var imagePath = Path.Combine("Public", "Imgs", filename);
 
             if (!System.IO.File.Exists(imagePath))
-                return NotFound("Imagem não encontrada");
+                return NotFound(new OutErrorViewModel() { error = "Imagem não encontrada" });
 
             var image = System.IO.File.ReadAllBytes(imagePath);
 
