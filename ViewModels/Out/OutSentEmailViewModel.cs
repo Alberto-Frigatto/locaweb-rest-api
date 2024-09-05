@@ -9,7 +9,7 @@ namespace locaweb_rest_api.ViewModels.Out
         public string Subject { get; set; }
         public string Body { get; set; }
         public DateTime TimeStamp { get; set; }
-        public DateTime SendDate { get; set; }
+        public DateOnly SendDate { get; set; }
         public bool Viewed { get; set; }
         public bool Scheduled { get; set; }
         public bool Canceled { get; set; }
