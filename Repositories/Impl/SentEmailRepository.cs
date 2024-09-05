@@ -42,6 +42,14 @@ namespace locaweb_rest_api.Repositories.Impl
                 .Include(e => e.User)
                 .FirstOrDefault(e => e.Id == id);
         }
+        
+        public SentEmail? GetLast(int idUser)
+        {
+            return _context.SentEmails
+                .Where(e => e.IdUser == idUser)
+                .OrderByDescending(e => e.Id)
+                .FirstOrDefault();
+        }
 
         public void Update(SentEmail model)
         {
