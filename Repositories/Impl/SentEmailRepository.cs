@@ -30,6 +30,7 @@ namespace locaweb_rest_api.Repositories.Impl
             return _context.SentEmails
                 .Where(e => e.IdUser == idUser &&
                         !_context.TrashedEmails.Any(te => te.IdSentEmail == e.Id && te.IdUser == idUser))
+                .OrderByDescending(e => e.Id)
                 .Skip((page - 1) * 20)
                 .Take(20)
                 .AsNoTracking()
@@ -39,7 +40,6 @@ namespace locaweb_rest_api.Repositories.Impl
         public SentEmail? GetById(int id)
         {
             return _context.SentEmails
-                .Include(e => e.User)
                 .FirstOrDefault(e => e.Id == id);
         }
         
