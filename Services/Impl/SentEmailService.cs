@@ -35,6 +35,11 @@ namespace locaweb_rest_api.Services.Impl
             return _repository.GetById(id);
         }
 
+        public SentEmail? GetLastSentEmail(int idUser)
+        {
+            return _repository.GetLast(idUser);
+        }
+
         public void UpdateSentEmail(SentEmail model)
         {
             _repository.Update(model);
