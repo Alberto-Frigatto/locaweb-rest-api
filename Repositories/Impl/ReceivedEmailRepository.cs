@@ -33,5 +33,18 @@ namespace locaweb_rest_api.Repositories.Impl
                             !_context.DeletedReceivedEmails.Any(de => de.IdReceivedEmail == e.Id && de.IdUser == idUser))
                 .FirstOrDefault();
         }
+
+        public IEnumerable<ReceivedEmail> Search(string query, int page, int idUser)
+        {
+            return _context.ReceivedEmails
+                .Where(e => (e.Sender.ToLower().Contains(query.ToLower()) || e.Subject.ToLower().Contains(query.ToLower()) || e.Body.ToLower().Contains(query.ToLower())) &&
+                            !_context.TrashedEmails.Any(te => te.IdReceivedEmail == e.Id && te.IdUser == idUser) &&
+                            !_context.DeletedReceivedEmails.Any(de => de.IdReceivedEmail == e.Id && de.IdUser == idUser))
+                .OrderByDescending(e => e.Id)
+                .Skip((page - 1) * 20)
+                .Take(20)
+                .AsNoTracking()
+                .ToList();
+        }
     }
 }
