@@ -1,5 +1,6 @@
 ﻿using locaweb_rest_api.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace locaweb_rest_api.Data.Contexts
 {
@@ -29,6 +30,11 @@ namespace locaweb_rest_api.Data.Contexts
                 entity.Property(p => p.Theme).IsRequired().HasColumnType("number(1)");
             });
 
+            ValueConverter converter = new ValueConverter<DateOnly, DateTime>(
+                v => v.ToDateTime(TimeOnly.MinValue),
+                v => DateOnly.FromDateTime(v)
+            );
+
             modelBuilder.Entity<SentEmail>(entity => { 
                 entity.ToTable("SentEmail");
                 entity.HasKey(p => p.Id);
@@ -36,7 +42,7 @@ namespace locaweb_rest_api.Data.Contexts
                 entity.Property(p => p.Subject).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.Body).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.TimeStamp).IsRequired().HasColumnType("date");
-                entity.Property(p => p.SendDate).IsRequired().HasColumnType("date");
+                entity.Property(p => p.SendDate).IsRequired().HasColumnType("date").HasConversion(converter);
                 entity.Property(p => p.Viewed).IsRequired().HasColumnType("number(1)");
                 entity.Property(p => p.Scheduled).IsRequired().HasColumnType("number(1)");
                 entity.Property(p => p.Canceled).IsRequired().HasColumnType("number(1)");
