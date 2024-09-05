@@ -30,6 +30,9 @@ var mapperConfig = new MapperConfiguration(c =>
     c.CreateMap<ReceivedEmail, OutReceivedEmailViewModel>();
 
     c.CreateMap<SentEmail, OutSentEmailViewModel>();
+
+    c.CreateMap<InCreateSentEmailViewModel, SentEmail>();
+    c.CreateMap<SentEmail, OutSentEmailViewModel>();
 });
 
 IMapper mapper = mapperConfig.CreateMapper();
