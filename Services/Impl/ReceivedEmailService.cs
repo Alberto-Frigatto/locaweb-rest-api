@@ -32,5 +32,18 @@ namespace locaweb_rest_api.Services.Impl
 
             return receivedEmails;
         }
+
+        public ReceivedEmail? GetReceivedEmailById(int id, int idUser)
+        {
+            ReceivedEmail? receivedEmail = _receivedEmailRepository.GetById(id, idUser);
+
+            if (receivedEmail != null)
+            {
+                receivedEmail.IsFavorite = _favoriteReceivedEmailRepository
+                    .GetByIdUserAndIdReceivedEmail(idUser, receivedEmail.Id) != null;
+            }
+
+            return receivedEmail;
+        }
     }
 }
