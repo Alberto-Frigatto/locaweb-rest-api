@@ -24,5 +24,14 @@ namespace locaweb_rest_api.Repositories.Impl
                 .AsNoTracking()
                 .ToList();
         }
+
+        public ReceivedEmail? GetById(int id, int idUser)
+        {
+            return _context.ReceivedEmails
+                .Where(e => e.Id == id &&
+                            !_context.TrashedEmails.Any(te => te.IdReceivedEmail == e.Id && te.IdUser == idUser) &&
+                            !_context.DeletedReceivedEmails.Any(de => de.IdReceivedEmail == e.Id && de.IdUser == idUser))
+                .FirstOrDefault();
+        }
     }
 }
