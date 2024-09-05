@@ -44,5 +44,10 @@ namespace locaweb_rest_api.Services.Impl
         {
             _repository.Update(model);
         }
+
+        public IEnumerable<SentEmail> SearchSentEmails(string query, int page, int idUser)
+        {
+            return _repository.Search(query, page, idUser);
+        }
     }
 }
