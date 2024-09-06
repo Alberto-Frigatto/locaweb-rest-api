@@ -37,5 +37,15 @@ namespace locaweb_rest_api.Services.Impl
         {
             return _repository.GetAll(page, idUser);
         }
+
+        public TrashedEmail? GetTrashedEmailByIdReceivedEmail(int idUser, int idReceivedEmail)
+        {
+            return _repository.GetByIdUserAndIdReceivedEmail(idUser, idReceivedEmail);
+        }
+
+        public TrashedEmail? GetTrashedEmailByIdSentEmail(int idUser, int idSentEmail)
+        {
+            return _repository.GetByIdUserAndIdSentEmail(idUser, idSentEmail);
+        }
     }
 }
