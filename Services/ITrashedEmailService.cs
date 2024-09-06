@@ -8,5 +8,7 @@ namespace locaweb_rest_api.Services
         void CreateTrashedEmail(TrashedEmail model);
         void DeleteTrashedEmailByIdReceivedEmail(int idUser, int idReceivedEmail);
         void DeleteTrashedEmailByIdSentEmail(int idUser, int idSentEmail);
+        TrashedEmail? GetTrashedEmailByIdSentEmail(int idUser, int idSentEmail);
+        TrashedEmail? GetTrashedEmailByIdReceivedEmail(int idUser, int idReceivedEmail);
     }
 }
