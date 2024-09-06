@@ -27,7 +27,13 @@ namespace locaweb_rest_api.Services.Impl
 
         public IEnumerable<FavoriteReceivedEmail> GetAllFavoriteReceivedEmails(int page, int idUser)
         {
-            return _repository.GetAll(page, idUser);
+            List<FavoriteReceivedEmail> favoriteReceivedEmails = _repository.GetAll(page, idUser).ToList() ;
+
+            favoriteReceivedEmails.ForEach(favoriteReceivedEmail => {
+                favoriteReceivedEmail.ReceivedEmail.IsFavorite = true;
+            });
+
+            return favoriteReceivedEmails;
         }
     }
 }
