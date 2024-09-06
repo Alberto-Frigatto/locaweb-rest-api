@@ -37,7 +37,7 @@ namespace locaweb_rest_api.Repositories.Impl
                 .Include(e => e.User)
                 .Include(e => e.ReceivedEmail)
                 .Where(e => e.IdUser == idUser)
-                .Skip((page - 1) * page)
+                .Skip((page - 1) * 20)
                 .Take(20)
                 .AsNoTracking()
                 .ToList();
