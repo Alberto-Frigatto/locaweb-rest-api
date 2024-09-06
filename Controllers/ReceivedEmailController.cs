@@ -90,7 +90,7 @@ namespace locaweb_rest_api.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public IActionResult GetSentEmailById(int id)
+        public IActionResult GetReceivedEmailById(int id)
         {
             string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
 
