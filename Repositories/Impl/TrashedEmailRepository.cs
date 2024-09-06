@@ -1,4 +1,4 @@
-﻿using locaweb_rest_api.Models;
+using locaweb_rest_api.Models;
 using locaweb_rest_api.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,9 +40,9 @@ namespace locaweb_rest_api.Repositories.Impl
         public IEnumerable<TrashedEmail> GetAll(int page, int idUser)
         {
             return _context.TrashedEmails
-                .Include(e => e.User)
                 .Include(e => e.ReceivedEmail)
                 .Include(e => e.SentEmail)
+                .OrderByDescending(e => e.Id)
                 .Where(e => e.IdUser == idUser)
                 .Skip((page - 1) * page)
                 .Take(20)
