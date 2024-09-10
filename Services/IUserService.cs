@@ -6,7 +6,7 @@ namespace locaweb_rest_api.Services
     {
         User? GetUserByEmail(string email);
         User? GetUserById(int id);
-        void CreateUser(User model, IFormFile image);
+        void CreateUser(User model);
         void UpdateUserPreferences(User model);
     }
 }
