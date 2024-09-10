@@ -28,8 +28,5 @@ namespace locaweb_rest_api.ViewModels.In
 
         [Required(ErrorMessage = "O tema é obrigatório")]
         public required bool Theme { get; set; }
-
-        [Required(ErrorMessage = "A imagem do usuário é obrigatória")]
-        public required IFormFile Image { get; set; }
     }
 }
