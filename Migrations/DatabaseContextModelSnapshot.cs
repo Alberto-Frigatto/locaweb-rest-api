@@ -198,11 +198,6 @@ namespace locaweb_rest_api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("NVARCHAR2(50)");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
-
                     b.Property<string>("Language")
                         .IsRequired()
                         .HasMaxLength(2)
