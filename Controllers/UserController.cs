@@ -23,8 +23,9 @@ namespace locaweb_rest_api.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([FromForm] InCreateUserViewModel viewModel)
+        public ActionResult Create([FromBody] InCreateUserViewModel viewModel)
         {
+            Console.WriteLine("PORRA CARALHO");
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -33,26 +34,11 @@ namespace locaweb_rest_api.Controllers
                 return Conflict(new OutErrorViewModel() { error = "O usuário já existe" });
 
             User newUser = _mapper.Map<User>(viewModel);
-            _service.CreateUser(newUser, viewModel.Image);
+            _service.CreateUser(newUser);
 
             OutUserViewModel outViewModel = _mapper.Map<OutUserViewModel>(newUser);
-            outViewModel.Image = Url.Action("GetUserImage", new { filename = newUser.Image });
 
             return CreatedAtAction(nameof(Create), new { id = newUser.Id }, outViewModel);
-        }
-
-        [AllowAnonymous]
-        [HttpGet("Image/{filename}")]
-        public ActionResult GetUserImage(string filename)
-        {
-            var imagePath = Path.Combine("uploads", filename);
-
-            if (!System.IO.File.Exists(imagePath))
-                return NotFound(new OutErrorViewModel() { error = "Imagem não encontrada" });
-
-            var image = System.IO.File.ReadAllBytes(imagePath);
-
-            return File(image, "image/jpeg");
         }
 
         [Authorize]
@@ -78,7 +64,6 @@ namespace locaweb_rest_api.Controllers
             _service.UpdateUserPreferences(user);
 
             OutUserViewModel outViewModel = _mapper.Map<OutUserViewModel>(user);
-            outViewModel.Image = Url.Action("GetUserImage", new { filename = user.Image });
 
             return Ok(outViewModel);
         }
@@ -98,7 +83,6 @@ namespace locaweb_rest_api.Controllers
                 return Unauthorized(new OutErrorViewModel() { error = "Usuário não autenticado" });
 
             OutUserViewModel outViewModel = _mapper.Map<OutUserViewModel>(user);
-            outViewModel.Image = Url.Action("GetUserImage", new { filename = user.Image });
 
             return Ok(outViewModel);
         }
