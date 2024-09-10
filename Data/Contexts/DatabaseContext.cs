@@ -25,7 +25,6 @@ namespace locaweb_rest_api.Data.Contexts
                 entity.Property(p => p.Email).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.FullName).IsRequired().HasMaxLength(50);
                 entity.Property(p => p.Password).IsRequired().HasMaxLength(255);
-                entity.Property(p => p.Image).IsRequired().HasMaxLength(100);
                 entity.Property(p => p.Language).IsRequired().HasMaxLength(2);
                 entity.Property(p => p.Theme).IsRequired().HasColumnType("number(1)");
             });
