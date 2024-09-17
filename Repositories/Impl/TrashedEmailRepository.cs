@@ -46,7 +46,7 @@ namespace locaweb_rest_api.Repositories.Impl
                 .Include(e => e.SentEmail)
                 .OrderByDescending(e => e.Id)
                 .Where(e => e.IdUser == idUser)
-                .Skip((page - 1) * page)
+                .Skip((page - 1) * 20)
                 .Take(20)
                 .AsNoTracking()
                 .ToList();
