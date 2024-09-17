@@ -53,6 +53,30 @@ namespace locaweb_rest_api.Controllers
         }
 
         [Authorize]
+        [HttpGet("Scheduled")]
+        public IActionResult GetAllScheduledSentEmails([FromQuery ]int page)
+        {
+            string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
+
+            if (userId == null)
+                return Unauthorized(new OutErrorViewModel() { error = "Usuário não autenticado" });
+
+            int parsedUserId = int.Parse(userId);
+            List<SentEmail> sentEmails = _sentEmailService.GetAllScheduledSentEmails(page, parsedUserId).ToList();
+
+            IEnumerable<OutSentEmailViewModel> viewModelList = _mapper
+                .Map<IEnumerable<OutSentEmailViewModel>>(sentEmails);
+
+            PaginationSentEmailViewModel paginationViewModel = new()
+            {
+                SentEmails = viewModelList,
+                CurrentPage = page
+            };
+
+            return Ok(paginationViewModel);
+        }
+
+        [Authorize]
         [HttpGet("Search/{query}")]
         public ActionResult SearchReceivedEmails(string query, [FromQuery] int page = 1)
         {
@@ -128,8 +152,6 @@ namespace locaweb_rest_api.Controllers
                 Canceled = false
             };
 
-            sentEmail.Viewed = new Random().Next(2) == 0 && !sentEmail.Canceled;
-
             if (!DateOnly.TryParseExact(viewModel.SendDate, "dd/MM/yyyy", out DateOnly dateOnlySendDate))
                 return BadRequest(new OutErrorViewModel() { error = "Data de envio do email inválida" });
 
@@ -139,6 +161,8 @@ namespace locaweb_rest_api.Controllers
             sentEmail.SendDate = dateOnlySendDate;
             sentEmail.TimeStamp = currentDateTimeBrasilia;
             sentEmail.Scheduled = dateOnlySendDate > currentDateBrasilia;
+
+            sentEmail.Viewed = new Random().Next(2) == 0 && !sentEmail.Scheduled;
 
             _sentEmailService.CreateSentEmail(sentEmail);
 
@@ -210,6 +234,14 @@ namespace locaweb_rest_api.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteSentEmailById(int id)
         {
+            string? userId = User.FindFirst(ClaimTypes.Name)?.Value;
+
+            if (userId == null)
+                return Unauthorized(new OutErrorViewModel() { error = "Usuário não autenticado" });
+
+            int parsedUserId = int.Parse(userId);
+
+            _trashedEmailService.DeleteTrashedEmailByIdSentEmail(parsedUserId, id);
             _sentEmailService.DeleteSentEmail(id);
 
             return NoContent();
