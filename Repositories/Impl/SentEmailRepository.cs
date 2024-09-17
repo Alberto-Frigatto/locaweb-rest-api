@@ -1,6 +1,7 @@
 ﻿using locaweb_rest_api.Models;
 using locaweb_rest_api.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Oracle.ManagedDataAccess.Types;
 
 namespace locaweb_rest_api.Repositories.Impl
 {
@@ -31,6 +32,19 @@ namespace locaweb_rest_api.Repositories.Impl
                 .Where(e => e.IdUser == idUser &&
                         !_context.TrashedEmails.Any(te => te.IdSentEmail == e.Id && te.IdUser == idUser))
                 .OrderByDescending(e => e.Id)
+                .Skip((page - 1) * 20)
+                .Take(20)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        public IEnumerable<SentEmail> GetAllScheduled(int page, int idUser)
+        {
+            return _context.SentEmails
+                .Where(e => e.IdUser == idUser &&
+                        Convert.ToInt16(e.Scheduled) == 1 &&
+                        !_context.TrashedEmails.Any(te => te.IdSentEmail == e.Id && te.IdUser == idUser))
+                .OrderByDescending(e => e.SendDate)
                 .Skip((page - 1) * 20)
                 .Take(20)
                 .AsNoTracking()
