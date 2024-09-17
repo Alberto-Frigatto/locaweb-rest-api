@@ -30,6 +30,11 @@ namespace locaweb_rest_api.Services.Impl
             return _repository.GetAll(page, idUser);
         }
 
+        public IEnumerable<SentEmail> GetAllScheduledSentEmails(int page, int idUser)
+        {
+            return _repository.GetAllScheduled(page, idUser);
+        }
+
         public SentEmail? GetSentEmailById(int id)
         {
             return _repository.GetById(id);
